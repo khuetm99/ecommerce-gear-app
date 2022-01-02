@@ -8,3 +8,4 @@ export 'order_model.dart';
 export 'delivery_address_model.dart';
 export 'message_model.dart';
 export 'theme_model.dart';
+export 'favorite_item_model.dart';

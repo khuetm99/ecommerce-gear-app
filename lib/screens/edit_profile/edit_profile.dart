@@ -258,7 +258,7 @@ class _EditProfileState extends State<EditProfile> {
                     AppTextInputBlur(
                       hintText: Translate.of(context)!.translate('input_name'),
                       errorText: Translate.of(context)!
-                          .translate(_validName as String),
+                          .translate(_validName ?? ""),
                       focusNode: _focusName,
                       textInputAction: TextInputAction.next,
                       onTapIcon: () async {
@@ -294,7 +294,7 @@ class _EditProfileState extends State<EditProfile> {
                     AppTextInputBlur(
                       hintText: Translate.of(context)!.translate('input_email'),
                       errorText: Translate.of(context)!
-                          .translate(_validEmail as String),
+                          .translate(_validEmail ?? ""),
                       focusNode: _focusEmail,
                       textInputAction: TextInputAction.next,
                       onTapIcon: () async {
@@ -334,7 +334,7 @@ class _EditProfileState extends State<EditProfile> {
                         'input_phone',
                       ),
                       errorText: Translate.of(context)!
-                          .translate(_validPhone as String),
+                          .translate(_validPhone ?? ""),
                       focusNode: _focusPhone,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.phone,
@@ -358,56 +358,57 @@ class _EditProfileState extends State<EditProfile> {
                       icon: Icon(Icons.clear),
                       controller: _textPhoneController,
                     ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 16, bottom: 8),
+                    //   child: Text(
+                    //     Translate.of(context)!.translate('information'),
+                    //     style: Theme.of(context)
+                    //         .textTheme
+                    //         .subtitle2!
+                    //         .copyWith(fontWeight: FontWeight.w600),
+                    //   ),
+                    // ),
+                    // AppTextInputBlur(
+                    //   hintText: Translate.of(context)!.translate(
+                    //     'input_information',
+                    //   ),
+                    //   errorText: Translate.of(context)!
+                    //       .translate(_validInfo as String),
+                    //   focusNode: _focusInfo,
+                    //   maxLines: 5,
+                    //   onTapIcon: () async {
+                    //     _textInfoController.clear();
+                    //   },
+                    //   onSubmitted: (text) {
+                    //     _update();
+                    //   },
+                    //   onChanged: (text) {
+                    //     setState(() {
+                    //       _validInfo = UtilValidator.validate(
+                    //         data: _textInfoController.text,
+                    //       );
+                    //     });
+                    //   },
+                    //   icon: Icon(Icons.clear),
+                    //   controller: _textInfoController,
+                    // ),
                     Padding(
-                      padding: EdgeInsets.only(top: 16, bottom: 8),
-                      child: Text(
-                        Translate.of(context)!.translate('information'),
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2!
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    AppTextInputBlur(
-                      hintText: Translate.of(context)!.translate(
-                        'input_information',
-                      ),
-                      errorText: Translate.of(context)!
-                          .translate(_validInfo as String),
-                      focusNode: _focusInfo,
-                      maxLines: 5,
-                      onTapIcon: () async {
-                        _textInfoController.clear();
-                      },
-                      onSubmitted: (text) {
-                        _update();
-                      },
-                      onChanged: (text) {
-                        setState(() {
-                          _validInfo = UtilValidator.validate(
-                            data: _textInfoController.text,
+                      padding: EdgeInsets.only(top: 30),
+                      child: BlocBuilder<ProfileBloc, ProfileState>(
+                        builder: (context, state) {
+                          return AppButton(
+                            Translate.of(context)!.translate('confirm'),
+                            onPressed: _update,
+                            loading: state is ProfileSaving,
+                            disabled: state is ProfileSaving,
                           );
-                        });
-                      },
-                      icon: Icon(Icons.clear),
-                      controller: _textInfoController,
-                    ),
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(16),
-                child: BlocBuilder<ProfileBloc, ProfileState>(
-                  builder: (context, state) {
-                    return AppButton(
-                      Translate.of(context)!.translate('confirm'),
-                      onPressed: _update,
-                      loading: state is ProfileSaving,
-                      disabled: state is ProfileSaving,
-                    );
-                  },
-                ),
-              )
+
             ],
           ),
         ),

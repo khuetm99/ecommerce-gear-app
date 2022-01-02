@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/blocs/authentication/bloc.dart';
 import 'package:ecommerce_app/blocs/bloc.dart';
 import 'package:ecommerce_app/blocs/cart/bloc.dart';
+import 'package:ecommerce_app/blocs/favorites/bloc.dart';
 import 'package:ecommerce_app/blocs/login/bloc.dart';
 import 'package:ecommerce_app/blocs/profile/bloc.dart';
 import 'package:ecommerce_app/configs/routes.dart';
@@ -121,6 +122,7 @@ class _LoginState extends State<Login> {
           AppBloc.authBloc.add(LoggedIn());
           AppBloc.profileBloc.add(LoadProfile());
           AppBloc.cartBloc.add(LoadCart());
+          AppBloc.favoriteBloc.add(LoadFavorite());
           Navigator.pop(context, widget.from as String);
         }
       },

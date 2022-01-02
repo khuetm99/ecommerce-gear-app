@@ -111,7 +111,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
 const List<String> hotKeywords = [
   "Akko",
-  "Zarer",
+  "Razer",
   "Dragon ball",
   "keyboard",
 ];

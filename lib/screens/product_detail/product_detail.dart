@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/blocs/app_bloc.dart';
 import 'package:ecommerce_app/blocs/authentication/bloc.dart';
+import 'package:ecommerce_app/blocs/favorites/bloc.dart';
 import 'package:ecommerce_app/blocs/feedbacks/bloc.dart';
 import 'package:ecommerce_app/blocs/product_detail/bloc.dart';
 import 'package:ecommerce_app/blocs/related_products/bloc.dart';
@@ -11,6 +12,7 @@ import 'package:ecommerce_app/screens/product_detail/product_detail_images.dart'
 import 'package:ecommerce_app/screens/product_detail/related_products.dart';
 import 'package:ecommerce_app/screens/product_detail/slogan.dart';
 import 'package:ecommerce_app/utils/utils.dart';
+import 'package:ecommerce_app/widgets/favorite_button.dart';
 import 'package:ecommerce_app/widgets/loading_widget.dart';
 import 'package:ecommerce_app/widgets/widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,11 +33,13 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   bool seeMore = false;
 
+
   void onSeeMore() => setState(() => seeMore = !seeMore);
 
   void onNavigateFeedBacks(Product product) {
     Navigator.pushNamed(context, Routes.feedbacks, arguments: product);
   }
+
 
   ///Build content UI
   Widget _buildContent(Product? product) {
@@ -195,7 +199,7 @@ class _ProductDetailState extends State<ProductDetail> {
           Row(
             children: [
               Expanded(
-                child: Text(
+                child: SelectableText(
                   product.name,
                   style: Theme.of(context)
                       .textTheme
@@ -243,40 +247,46 @@ class _ProductDetailState extends State<ProductDetail> {
                   )
                 ],
               ),
-              Spacer(),
-
               ///Available
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.center,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    color: product.isAvailable
-                        ? Color(0xFFFFE6E6)
-                        : Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      bottomLeft: Radius.circular(25),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40.0),
+                    child: FavoriteButton(product: product),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.center,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: product.isAvailable
+                            ? Color(0xFFFFE6E6)
+                            : Color(0xFFF5F6F9),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            "assets/icons/Check mark rounde.svg",
+                            color: product.isAvailable
+                                ? Color(0xFFFF4848)
+                                : Color(0xFFDBDEE4),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "${product.isAvailable ? Translate.of(context)!.translate('available') : Translate.of(context)!.translate('not_available')}",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/Check mark rounde.svg",
-                        color: product.isAvailable
-                            ? Color(0xFFFF4848)
-                            : Color(0xFFDBDEE4),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        "${product.isAvailable ? Translate.of(context)!.translate('available') : Translate.of(context)!.translate('not_available')}",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  ),
-                ),
+                ],
               ),
             ],
           ),
@@ -296,31 +306,29 @@ class _ProductDetailState extends State<ProductDetail> {
                   size: 18,
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 8, right: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context)!.translate('sold_quantity'),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(
-                        product.soldQuantity.toString() +
-                            ' ' +
-                            Translate.of(context)!.translate('products'),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      Translate.of(context)!.translate('sold_quantity'),
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    Text(
+                      product.soldQuantity.toString() +
+                          ' ' +
+                          Translate.of(context)!.translate('products'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -422,8 +430,8 @@ class _ProductDetailState extends State<ProductDetail> {
         child: BlocListener<FeedbackBloc, FeedbackState>(
           listener: (context, state) {
             if (state is FeedbackSaveSuccess) {
-              BlocProvider.of<ProductDetailBloc>(context).add(
-                  LoadProductDetailById(id: widget.id as String));
+              BlocProvider.of<ProductDetailBloc>(context)
+                  .add(LoadProductDetailById(id: widget.id as String));
             }
           },
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(

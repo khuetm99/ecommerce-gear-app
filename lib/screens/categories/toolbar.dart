@@ -122,7 +122,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
     } else
       return Text(
         Translate.of(context)!.translate(widget.currCategoryModel.name),
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.headline6,
       );
   }
 

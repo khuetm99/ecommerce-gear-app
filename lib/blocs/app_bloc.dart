@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/blocs/authentication/authentication_bloc.dart';
 import 'package:ecommerce_app/blocs/cart/bloc.dart';
+import 'package:ecommerce_app/blocs/favorites/bloc.dart';
 import 'package:ecommerce_app/blocs/feedbacks/bloc.dart';
 import 'package:ecommerce_app/blocs/login/bloc.dart';
 import 'package:ecommerce_app/blocs/order/bloc.dart';
@@ -18,6 +19,7 @@ class AppBloc {
   static final cartBloc = CartBloc();
   static final searchBloc = SearchBloc();
   static final feedbackBloc = FeedbackBloc();
+  static final favoriteBloc = FavoriteBloc();
   static final orderBloc = OrderBloc();
   static final profileBloc = ProfileBloc();
   static final languageBloc = LanguageBloc();
@@ -48,6 +50,9 @@ class AppBloc {
     BlocProvider<FeedbackBloc>(
       create: (context) => feedbackBloc,
     ),
+    BlocProvider<FavoriteBloc>(
+      create: (context) => favoriteBloc,
+    ),
     BlocProvider<ProfileBloc>(
       create: (context) => profileBloc,
     ),
@@ -68,6 +73,7 @@ class AppBloc {
     orderBloc.close();
     searchBloc.close();
     feedbackBloc.close();
+    favoriteBloc.close();
     profileBloc.close();
     languageBloc.close();
     themeBloc.close();

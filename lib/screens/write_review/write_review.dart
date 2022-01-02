@@ -30,7 +30,7 @@ class _WriteReviewState extends State<WriteReview> {
 
   @override
   void initState() {
-    _rate = product.rating;
+    _rate = double.parse(product.rating.toString());
     super.initState();
   }
 
@@ -222,7 +222,7 @@ class _WriteReviewState extends State<WriteReview> {
                           'input_feedback',
                         ),
                         errorText:
-                        Translate.of(context)!.translate(_validReview as String),
+                        Translate.of(context)!.translate(_validReview ?? ""),
                         focusNode: _focusReview,
                         maxLines: 5,
                         onTapIcon: () async {

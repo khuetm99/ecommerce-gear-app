@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_app/data/models/cart_item_model.dart';
+import 'package:ecommerce_app/data/models/models.dart';
 
-import '../repository.dart';
-
+import 'cart_repo.dart';
 
 /// cart is collection in each user
 class FirebaseCartRepository implements CartRepository {
@@ -15,9 +14,9 @@ class FirebaseCartRepository implements CartRepository {
         .collection("cart")
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
-              var data = doc.data()!;
-              return CartItemModel.fromMap(data);
-            }).toList());
+      var data = doc.data()!;
+      return CartItemModel.fromMap(data);
+    }).toList());
   }
 
   /// Add item
@@ -75,4 +74,14 @@ class FirebaseCartRepository implements CartRepository {
       print(error);
     });
   }
+
+  ///Singleton factory
+  static final FirebaseCartRepository _instance =
+  FirebaseCartRepository._internal();
+
+  factory FirebaseCartRepository() {
+    return _instance;
+  }
+
+  FirebaseCartRepository._internal();
 }

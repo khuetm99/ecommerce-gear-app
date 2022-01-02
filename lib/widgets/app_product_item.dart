@@ -12,14 +12,16 @@ import 'widget.dart';
 enum ProductViewType {
   grid,
   list,
+  witchList
 }
 
 class AppProductItem extends StatelessWidget {
   final Product? product;
   final ProductViewType? type;
   final Function(Product)? onPressed;
+  final PopupMenuButton? action;
 
-  const AppProductItem({Key? key, this.product, this.type, this.onPressed})
+  const AppProductItem({Key? key, this.product, this.type, this.onPressed, this.action})
       : super(key: key);
 
   @override
@@ -196,16 +198,18 @@ class AppProductItem extends StatelessWidget {
                                       fontWeight: FontWeight.w600),
                             ),
                           ),
-                          Text.rich(
-                            TextSpan(
-                              text: Translate.of(context)!.translate("sold"),
-                              style: Theme.of(context).textTheme.caption,
-                              children: [
-                                TextSpan(
-                                  text: " ${product!.soldQuantity}",
-                                  style: Theme.of(context).textTheme.caption,
-                                ),
-                              ],
+                          Expanded(
+                            child: Text.rich(
+                              TextSpan(
+                                text: Translate.of(context)!.translate("sold"),
+                                style: Theme.of(context).textTheme.caption,
+                                children: [
+                                  TextSpan(
+                                    text: " ${product!.soldQuantity}",
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ]),
@@ -484,10 +488,203 @@ class AppProductItem extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         );
+
+      case ProductViewType.witchList:
+        if (product == null) {
+          return Shimmer.fromColors(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 140,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 8,
+                    right: 8,
+                    top: 4,
+                    bottom: 4,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        height: 20,
+                        width: 220,
+                        color: Colors.white,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 4),
+                      ),
+                      Container(
+                        height: 10,
+                        width: 200,
+                        color: Colors.white,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8),
+                      ),
+                      Container(
+                        height: 20,
+                        width: 150,
+                        color: Colors.white,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8),
+                      ),
+                      Container(
+                        height: 10,
+                        width: 180,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            baseColor: Theme.of(context).hoverColor,
+            highlightColor: Theme.of(context).highlightColor,
+          );
+        }
+        return InkWell(
+          onTap: () {
+            print("Product id: ${product!.id}");
+            onPressed!(product!);
+          },
+          child: Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: product!.images[0],
+                imageBuilder: (context, imageProvider) {
+                  return Container(
+                    width: 140,
+                    height: 130,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(8),
+                      ),
+                    ),
+                  );
+                },
+                placeholder: (context, url) {
+                  return Shimmer.fromColors(
+                    baseColor: Theme.of(context).hoverColor,
+                    highlightColor: Theme.of(context).highlightColor,
+                    enabled: true,
+                    child: Container(
+                      width: 140,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          bottomLeft: Radius.circular(8),
+                        ),
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
+                errorWidget: (context, url, error) {
+                  return Shimmer.fromColors(
+                    baseColor: Theme.of(context).hoverColor,
+                    highlightColor: Theme.of(context).highlightColor,
+                    enabled: true,
+                    child: Container(
+                      width: 140,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          bottomLeft: Radius.circular(8),
+                        ),
+                      ),
+                      child: Icon(Icons.error),
+                    ),
+                  );
+                },
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 4,
+                    bottom: 4,
+                    left: 10,
+                    right: 8,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 9,
+                            child: Text(
+                              product!.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 8)),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "${product!.price.toPrice()}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ]),
+                      Padding(padding: EdgeInsets.only(top: 10)),
+                      Row(
+                        children: [
+                          AppTag(
+                            "${product!.rating}",
+                            type: TagType.rateSmall,
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 4)),
+                          StarRating(
+                            rating: product!.rating.toDouble(),
+                            size: 15,
+                            color: AppTheme.yellowColor,
+                            borderColor: AppTheme.yellowColor,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              action ?? Container()
+            ],
+          ),
+        );
+
 
       default:
         return Container(width: 160.0);

@@ -170,7 +170,7 @@ class _SignUpState extends State<SignUp> {
                     ),
 
                     Padding(
-                      padding: EdgeInsets.only(bottom: 8),
+                      padding: EdgeInsets.only(bottom: 8, top: 3),
                       child: Text(
                         Translate.of(context)!.translate('phone'),
                         style: Theme.of(context)
@@ -197,7 +197,7 @@ class _SignUpState extends State<SignUp> {
                       },
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 8),
+                      padding: EdgeInsets.only(bottom: 8, top: 3),
                       child: Text(
                         Translate.of(context)!.translate('email'),
                         style: Theme.of(context)

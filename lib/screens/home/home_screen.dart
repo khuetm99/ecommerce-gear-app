@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/blocs/app_bloc.dart';
 import 'package:ecommerce_app/blocs/authentication/bloc.dart';
+import 'package:ecommerce_app/blocs/feedbacks/bloc.dart';
 import 'package:ecommerce_app/blocs/home/bloc.dart';
 import 'package:ecommerce_app/configs/routes.dart';
 import 'package:ecommerce_app/data/models/models.dart';
@@ -150,123 +151,131 @@ class _HomeScreenState extends State<HomeScreen> {
       create: (context) => HomeBloc()..add(LoadHome()),
       child: Builder(
         builder: (context) {
-          return Scaffold(
-            body: SafeArea(
-              child: CustomScrollView(
-                physics: AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics(),
-                ),
-                slivers: [
-                  SliverPersistentHeader(
-                    delegate: HomePersistentHeader(),
-                    pinned: true,
+          return BlocListener<FeedbackBloc, FeedbackState>(
+            listener: (context, state) {
+              if (state is FeedbackSaveSuccess) {
+                BlocProvider.of<HomeBloc>(context).add(RefreshHome());
+              }
+            },
+            child: Scaffold(
+              body: SafeArea(
+                child: CustomScrollView(
+                  physics: AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
                   ),
-                  CupertinoSliverRefreshControl(onRefresh: () async {
-                    BlocProvider.of<HomeBloc>(context).add(RefreshHome());
-                  }),
-                  SliverToBoxAdapter(
-                    child: BlocBuilder<HomeBloc, HomeState>(
-                      builder: (context, state) {
-                        List<BannerModel>? banners;
-                        List<CategoryModel>? categories;
-                        List<Product>? discountProducts;
-                        List<Product>? popularProducts;
-
-                        if (state is HomeLoaded) {
-                          banners = state.homeResponse.banners;
-                          categories = state.homeResponse.categories;
-                          discountProducts =
-                              state.homeResponse.discountProducts;
-                          popularProducts = state.homeResponse.popularProducts;
-                        }
-
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              HomeBanner(
-                                banners: banners,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 16.0,
-                                  left: 16,
-                                  right: 16,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      Translate.of(context)!.translate(
-                                        'product_categories',
-                                      ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 10.0,
-                                  left: 16,
-                                  right: 16,
-                                ),
-                                child: _buildCategory(categories),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: PromoWidget(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      Translate.of(context)!.translate(
-                                        'discount_products',
-                                      ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  child:
-                                      _buildDiscountProduct(discountProducts)),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 18.0, left: 8, bottom: 10),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      Translate.of(context)!.translate(
-                                        'popular_products',
-                                      ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              _buildPopularProduct(popularProducts)
-                            ],
-                          ),
-                        );
-                      },
+                  slivers: [
+                    SliverPersistentHeader(
+                      delegate: HomePersistentHeader(),
+                      pinned: true,
                     ),
-                  )
-                ],
+                    CupertinoSliverRefreshControl(onRefresh: () async {
+                      BlocProvider.of<HomeBloc>(context).add(RefreshHome());
+                    }),
+                    SliverToBoxAdapter(
+                      child: BlocBuilder<HomeBloc, HomeState>(
+                        builder: (context, state) {
+                          List<BannerModel>? banners;
+                          List<CategoryModel>? categories;
+                          List<Product>? discountProducts;
+                          List<Product>? popularProducts;
+
+                          if (state is HomeLoaded) {
+                            banners = state.homeResponse.banners;
+                            categories = state.homeResponse.categories;
+                            discountProducts =
+                                state.homeResponse.discountProducts;
+                            popularProducts =
+                                state.homeResponse.popularProducts;
+                          }
+
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                HomeBanner(
+                                  banners: banners,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 16.0,
+                                    left: 16,
+                                    right: 16,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        Translate.of(context)!.translate(
+                                          'product_categories',
+                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 10.0,
+                                    left: 16,
+                                    right: 16,
+                                  ),
+                                  child: _buildCategory(categories),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: PromoWidget(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        Translate.of(context)!.translate(
+                                          'discount_products',
+                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SingleChildScrollView(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: _buildDiscountProduct(
+                                        discountProducts)),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 18.0, left: 8, bottom: 10),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        Translate.of(context)!.translate(
+                                          'popular_products',
+                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                _buildPopularProduct(popularProducts)
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );

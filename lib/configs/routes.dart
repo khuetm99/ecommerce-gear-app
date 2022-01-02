@@ -16,6 +16,7 @@ import 'package:ecommerce_app/screens/screen.dart';
 import 'package:ecommerce_app/screens/login/login.dart';
 import 'package:ecommerce_app/screens/search/search_screen.dart';
 import 'package:ecommerce_app/screens/splash/splash_screen.dart';
+import 'package:ecommerce_app/screens/wishlist/witchlist.dart';
 import 'package:ecommerce_app/screens/write_review/write_review.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ class Routes {
   static const String feedbacks = "/feedbacks";
   static const String writeReview = "/writeReview";
   static const String message = "/message";
+  static const String wishList = "/witchList";
 
   Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -193,6 +195,13 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => MessageScreen(),
         );
+
+
+      case wishList:
+        return MaterialPageRoute(
+          builder: (context) => WishList(),
+        );
+
 
 
       default:

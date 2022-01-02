@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/blocs/authentication/bloc.dart';
 import 'package:ecommerce_app/blocs/bloc.dart';
 import 'package:ecommerce_app/blocs/cart/bloc.dart';
+import 'package:ecommerce_app/blocs/favorites/bloc.dart';
 import 'package:ecommerce_app/blocs/profile/bloc.dart';
 import 'package:ecommerce_app/configs/config.dart';
 import 'package:ecommerce_app/data/models/theme_model.dart';
@@ -92,6 +93,9 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
 
       ///cart Load
       AppBloc.cartBloc.add(LoadCart());
+
+      ///favorites Load
+      AppBloc.favoriteBloc.add(LoadFavorite());
 
 
       ///First or After upgrade version show intro preview app

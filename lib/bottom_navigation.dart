@@ -1,7 +1,6 @@
-import 'package:ecommerce_app/blocs/app_bloc.dart';
 import 'package:ecommerce_app/blocs/authentication/authentication_bloc.dart';
-import 'package:ecommerce_app/blocs/profile/bloc.dart';
 import 'package:ecommerce_app/screens/profile/profile.dart';
+import 'package:ecommerce_app/screens/wishlist/witchlist.dart';
 import 'package:ecommerce_app/utils/translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,15 +39,18 @@ class _BottomNavigationState extends State<BottomNavigation>
 
   ///On change tab bottom menu
   void _onItemTapped({int? index, bool? requireLogin}) async {
-    if (requireLogin! && (index == 1)) {
+    if (requireLogin! && (index == 1 || index == 2)) {
       final result = await Navigator.pushNamed(
         context,
         Routes.signIn,
-        arguments: Routes.account,
+        arguments: index == 1 ? Routes.wishList : Routes.account,
       );
       switch (result) {
-        case Routes.account:
+        case Routes.wishList:
           index = 1;
+          break;
+        case Routes.account:
+          index = 2;
           break;
         default:
           return;
@@ -64,11 +66,11 @@ class _BottomNavigationState extends State<BottomNavigation>
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) async{
-        if (state is Unauthenticated && (selectedIndex == 1)) {
+        if (state is Unauthenticated && (selectedIndex == 1 || selectedIndex == 2)) {
           final result = await Navigator.pushNamed(
             context,
             Routes.signIn,
-            arguments: Routes.account,
+            arguments: selectedIndex == 1 ? Routes.wishList : Routes.account,
           );
           if (result == null) {
             setState(() {
@@ -82,7 +84,7 @@ class _BottomNavigationState extends State<BottomNavigation>
 
         return Scaffold(
           body: IndexedStack(
-            children: <Widget>[HomeScreen(), Profile()],
+            children: <Widget>[HomeScreen(), WishList(), Profile()],
             index: selectedIndex,
           ),
           bottomNavigationBar: SalomonBottomBar(
@@ -92,6 +94,11 @@ class _BottomNavigationState extends State<BottomNavigation>
                 icon:  Icon(Icons.home),
                 title: Text(Translate.of(context)!.translate('home')),
                 selectedColor: Theme.of(context).primaryColor
+              ),
+              SalomonBottomBarItem(
+                  icon:  Icon(Icons.bookmark),
+                  title: Text(Translate.of(context)!.translate('wish_list')),
+                  selectedColor: Theme.of(context).primaryColor
               ),
               SalomonBottomBarItem(
                 icon: Icon(Icons.account_circle),
