@@ -32,7 +32,7 @@ lib/
 
 ## App Features:
 * Flutter + Firebase (Firestore, Authentication, Storage)
-  Test account: haonguyen.uet@gmail.com / 123456
+  Test account: a@gmail.com / 123456
 * Use BloC pattern
 * Responsive
 * Clean Architecture
@@ -50,13 +50,13 @@ lib/
 ## Screenshots
 
    <p align="center">
-   <img src="screenshots/intro.png" height = "400" width="250"> <img src="screenshots/home.png" height = "400" width="250">
-    <img src="screenshots/profile.png" height = "400" width="250">
+   <img src="screenshots/intro.png" height = "400" width="200"> <img src="screenshots/home.png" height = "400" width="200">
+    <img src="screenshots/profile.png" height = "400" width="200">
    </p>
 
    <p align="center">
-   <img src="screenshots/detail.png" height = "400" width="250"> <img src="screenshots/image_detail.png" height = "400" width="250">
-    <img src="screenshots/cart.png" height = "400" width="250">
+   <img src="screenshots/detail.png" height = "400" width="200"> <img src="screenshots/image_detail.png" height = "400" width="200">
+    <img src="screenshots/cart.png" height = "400" width="200">
    </p>
 
 
