@@ -24,12 +24,14 @@ class _HomeBannerState extends State<HomeBanner> {
   var currentIndex = 0;
 
   ///Make action
-  Future<void> _makeAction(String url, BuildContext context) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      UtilDialog.showInformation(context,
-          content: Translate.of(context)!.translate('cannot_make_action'));
+  Future<void> _makeAction(String? url, BuildContext context) async {
+    if(url != null) {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        UtilDialog.showInformation(context,
+            content: Translate.of(context)!.translate('cannot_make_action'));
+      }
     }
   }
 
@@ -88,12 +90,15 @@ class _HomeBannerState extends State<HomeBanner> {
             );
           },
           imageBuilder: (context, imageProvider) {
-            return Container(
-              height: 150,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
+            return GestureDetector(
+              onTap: () => _makeAction(banner.linkUrl, context),
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             );

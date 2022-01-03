@@ -16,6 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield* _mapLoadHomeToState();
     } else if (event is RefreshHome) {
       yield HomeLoading();
+      await Future.delayed(Duration(milliseconds: 800));
       yield* _mapLoadHomeToState();
     }
   }

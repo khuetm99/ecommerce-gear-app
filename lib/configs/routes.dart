@@ -16,7 +16,7 @@ import 'package:ecommerce_app/screens/screen.dart';
 import 'package:ecommerce_app/screens/login/login.dart';
 import 'package:ecommerce_app/screens/search/search_screen.dart';
 import 'package:ecommerce_app/screens/splash/splash_screen.dart';
-import 'package:ecommerce_app/screens/wishlist/witchlist.dart';
+import 'package:ecommerce_app/screens/wishlist/wishlist.dart';
 import 'package:ecommerce_app/screens/write_review/write_review.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -47,10 +47,7 @@ class _WriteReviewState extends State<WriteReview> {
       if (state is ProfileLoaded) {
         final user = state.loggedUser;
         AppBloc.feedbackBloc.add(AddFeedback(
-            content: _textReview.text,
-            rating: _rate.toInt(),
-            user: user
-        ));
+            content: _textReview.text, rating: _rate.toInt(), user: user));
       }
     } else {
       _showMessage(Translate.of(context)!.translate('please_input_data'));
@@ -72,10 +69,7 @@ class _WriteReviewState extends State<WriteReview> {
               children: <Widget>[
                 Text(
                   message,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyText1,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),
@@ -93,7 +87,6 @@ class _WriteReviewState extends State<WriteReview> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -133,51 +126,55 @@ class _WriteReviewState extends State<WriteReview> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    CachedNetworkImage(
-                      imageUrl: (AppBloc.profileBloc.state as ProfileLoaded).loggedUser.avatar,
-                      imageBuilder: (context, imageProvider) {
-                        return Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
-                      },
-                      placeholder: (context, url) {
-                        return Shimmer.fromColors(
-                          baseColor: Theme.of(context).hoverColor,
-                          highlightColor: Theme.of(context).highlightColor,
-                          enabled: true,
-                          child: Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        );
-                      },
-                      errorWidget: (context, url, error) {
-                        return Shimmer.fromColors(
-                          baseColor: Theme.of(context).hoverColor,
-                          highlightColor: Theme.of(context).highlightColor,
-                          enabled: true,
-                          child: Container(
-                            width: 60,
-                            height: 60,
-                            child: Icon(Icons.error),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
+                    BlocBuilder<ProfileBloc, ProfileState>(
+                      builder: (context, state) {
+                        return CachedNetworkImage(
+                          imageUrl: (state as ProfileLoaded).loggedUser.avatar,
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          },
+                          placeholder: (context, url) {
+                            return Shimmer.fromColors(
+                              baseColor: Theme.of(context).hoverColor,
+                              highlightColor: Theme.of(context).highlightColor,
+                              enabled: true,
+                              child: Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            );
+                          },
+                          errorWidget: (context, url, error) {
+                            return Shimmer.fromColors(
+                              baseColor: Theme.of(context).hoverColor,
+                              highlightColor: Theme.of(context).highlightColor,
+                              enabled: true,
+                              child: Container(
+                                width: 60,
+                                height: 60,
+                                child: Icon(Icons.error),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                     )
@@ -221,8 +218,8 @@ class _WriteReviewState extends State<WriteReview> {
                         hintText: Translate.of(context)!.translate(
                           'input_feedback',
                         ),
-                        errorText:
-                        Translate.of(context)!.translate(_validReview ?? ""),
+                        errorText: Translate.of(context)!
+                            .translate(_validReview ?? ""),
                         focusNode: _focusReview,
                         maxLines: 5,
                         onTapIcon: () async {

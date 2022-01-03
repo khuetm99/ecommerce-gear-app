@@ -47,6 +47,19 @@ lib/
 * Admob
 * More...
 
+## Screenshots
+
+   <p align="center">
+   <img src="screenshots/intro.png" height = "400" width="250"> <img src="screenshots/home.png" height = "400" width="250">
+    <img src="screenshots/profile.png" height = "400" width="250">
+   </p>
+
+   <p align="center">
+   <img src="screenshots/detail.png" height = "400" width="250"> <img src="screenshots/image_detail.png" height = "400" width="250">
+    <img src="screenshots/cart.png" height = "400" width="250">
+   </p>
+
+
 ## Before run project, execute commands:
 - `flutter clean`
 - `flutter pub get`

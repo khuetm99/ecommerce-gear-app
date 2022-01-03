@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/blocs/app_bloc.dart';
+import 'package:ecommerce_app/blocs/authentication/bloc.dart';
 import 'package:ecommerce_app/configs/config.dart';
 import 'package:ecommerce_app/configs/size_config.dart';
 import 'package:ecommerce_app/constants/constants.dart';
@@ -66,7 +68,19 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                       padding: const EdgeInsets.only(left: 10.0, right: 8),
                       child: IconButtonWithCounter(
                         icon: ICON_CONST.MESSAGE,
-                        onPressed: () => Navigator.pushNamed(context, Routes.message),
+                        onPressed: () async{
+                          final authState = AppBloc.authBloc.state;
+                          if(authState is Unauthenticated) {
+                            final result = await Navigator.pushNamed(
+                              context,
+                              Routes.signIn,
+                              arguments: Routes.message,
+                            );
+                            if (result != Routes.message) {
+                              return;
+                            }
+                          }
+                          Navigator.pushNamed(context, Routes.message);},
                         counter: 0,
                         size: 25,
                         color: Theme.of(context).colorScheme.onSurface,

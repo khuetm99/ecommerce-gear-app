@@ -1,4 +1,3 @@
-
 import 'package:ecommerce_app/blocs/app_bloc.dart';
 import 'package:ecommerce_app/blocs/profile/bloc.dart';
 import 'package:ecommerce_app/data/models/location_model.dart';
@@ -14,12 +13,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'address_picker.dart';
 
-
 class DeliveryAddressModelBottomSheet extends StatefulWidget {
   final DeliveryAddressModel? deliveryAddress;
 
   const DeliveryAddressModelBottomSheet({Key? key, this.deliveryAddress})
       : super(key: key);
+
   @override
   _DeliveryAddressModelBottomSheetState createState() =>
       _DeliveryAddressModelBottomSheetState();
@@ -62,7 +61,6 @@ class _DeliveryAddressModelBottomSheetState
       selectedCity = deliveryAddress!.city;
       selectedDistrict = deliveryAddress!.district;
       selectedWard = deliveryAddress!.ward;
-
     } else if (profileState is ProfileLoaded) {
       nameController.text = profileState.loggedUser.name;
       phoneNumberController.text = profileState.loggedUser.phoneNumber;
@@ -200,19 +198,20 @@ class _DeliveryAddressModelBottomSheetState
           children: [
             Text(
               Translate.of(context)!.translate("use_google_map"),
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                fontSize: 15
-              ),
+              style:
+                  Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15),
             ),
             IconButton(
-              icon: Icon(Icons.forward),
-              onPressed: () {} //Navigator.pushNamed(context, AppRouter.MAP),
-            )
+                icon: Icon(Icons.forward),
+                onPressed: ()  {
+                  //Navigator.pushNamed(context, AppRouter.MAP),
+                })
           ],
         ),
       ),
     );
   }
+
 
   _buildSwitchDefaultAddress() {
     return CustomCardWidget(
@@ -223,9 +222,8 @@ class _DeliveryAddressModelBottomSheetState
           children: [
             Text(
               Translate.of(context)!.translate("put_this_is_default_address"),
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontSize: 15
-              ),
+              style:
+                  Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15),
             ),
             CupertinoSwitch(
               value: isDefaultAddress,

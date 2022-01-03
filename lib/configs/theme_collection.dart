@@ -92,8 +92,7 @@ class CollectionTheme {
       primaryColorBrightness: ThemeData.estimateBrightnessForColor(
         primaryColor,
       ),
-      appBarTheme: AppBarTheme(color: primaryColor,
-      ),
+      appBarTheme: AppBarTheme(color: primaryColor),
       canvasColor: colorScheme.background,
       accentColor: colorScheme.secondary,
       accentColorBrightness: ThemeData.estimateBrightnessForColor(

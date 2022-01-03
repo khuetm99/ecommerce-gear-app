@@ -47,7 +47,7 @@ class _WishListState extends State<WishList> {
         content = ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           padding: EdgeInsets.only(
-            left: 16,
+            left: 5,
             top: 16,
           ),
           itemCount: state.favorites.length,

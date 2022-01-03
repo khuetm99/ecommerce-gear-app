@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/blocs/authentication/authentication_bloc.dart';
 import 'package:ecommerce_app/screens/profile/profile.dart';
-import 'package:ecommerce_app/screens/wishlist/witchlist.dart';
+import 'package:ecommerce_app/screens/wishlist/wishlist.dart';
 import 'package:ecommerce_app/utils/translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
