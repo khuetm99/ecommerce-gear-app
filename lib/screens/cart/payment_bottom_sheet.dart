@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/blocs/cart/bloc.dart';
+import 'package:ecommerce_app/blocs/discount/discount_bloc.dart';
 import 'package:ecommerce_app/blocs/order/bloc.dart';
 import 'package:ecommerce_app/blocs/profile/bloc.dart';
 import 'package:ecommerce_app/configs/config.dart';
@@ -38,13 +39,20 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
       priceOfGoods = cartState.priceOfGoods;
       deliveryFee = 30000;
 
-      if (priceOfGoods >= 12000000) {
-        coupon = 1000000;
-      } else if (priceOfGoods >= 5000000) {
-        coupon = 500000;
-      } else if (priceOfGoods >= 2000000) {
-        coupon = 200000;
+      DiscountState discountState = BlocProvider.of<DiscountBloc>(context).state;
+      if(discountState is DiscountChoosed) {
+        if(priceOfGoods >= discountState.discountModel.limit) {
+          coupon = discountState.discountModel.discount;
+        }
       }
+
+      // if (priceOfGoods >= 12000000) {
+      //   coupon = 1000000;
+      // } else if (priceOfGoods >= 5000000) {
+      //   coupon = 500000;
+      // } else if (priceOfGoods >= 2000000) {
+      //   coupon = 200000;
+      // }
 
       priceToBePaid = priceOfGoods + deliveryFee - coupon;
     }

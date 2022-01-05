@@ -13,4 +13,11 @@ class UtilFormatter {
         new DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000);
     return formatter.format(date);
   }
+
+  static String formatTimeStampToDiscountTimestamp(Timestamp timestamp) {
+    DateFormat formatter = DateFormat('dd/MM/yyyy');
+    var date =
+    new DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000);
+    return formatter.format(date);
+  }
 }

@@ -29,7 +29,7 @@ class ListCartItemModel extends StatelessWidget {
                     itemCount: cart.length + 1,
                     itemBuilder: (context, index) {
                       if (index == cart.length) {
-                        return PromoWidget();
+                        return PromoWidget(canChoose: true,);
                       }
                       return CustomDismissible(
                         key: Key(cart[index].id),

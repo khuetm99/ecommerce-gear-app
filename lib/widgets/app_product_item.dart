@@ -76,7 +76,7 @@ class AppProductItem extends StatelessWidget {
         }
         return GestureDetector(
           onTap: () {
-            print("Product id: ${product!.id}");
+            //print("Product id: ${product!.id}");
             onPressed!(product!);
           },
           child: Container(
@@ -85,7 +85,7 @@ class AppProductItem extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8.0),

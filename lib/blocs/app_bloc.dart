@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/blocs/authentication/authentication_bloc.dart';
 import 'package:ecommerce_app/blocs/cart/bloc.dart';
+import 'package:ecommerce_app/blocs/discount/discount_bloc.dart';
 import 'package:ecommerce_app/blocs/favorites/bloc.dart';
 import 'package:ecommerce_app/blocs/feedbacks/bloc.dart';
 import 'package:ecommerce_app/blocs/login/bloc.dart';
@@ -21,6 +22,7 @@ class AppBloc {
   static final feedbackBloc = FeedbackBloc();
   static final favoriteBloc = FavoriteBloc();
   static final orderBloc = OrderBloc();
+  static final discountBloc = DiscountBloc();
   static final profileBloc = ProfileBloc();
   static final languageBloc = LanguageBloc();
   static final themeBloc = ThemeBloc();
@@ -56,6 +58,9 @@ class AppBloc {
     BlocProvider<ProfileBloc>(
       create: (context) => profileBloc,
     ),
+    BlocProvider<DiscountBloc>(
+      create: (context) => discountBloc,
+    ),
     BlocProvider<LanguageBloc>(
       create: (context) => languageBloc,
     ),
@@ -75,6 +80,7 @@ class AppBloc {
     feedbackBloc.close();
     favoriteBloc.close();
     profileBloc.close();
+    discountBloc.close();
     languageBloc.close();
     themeBloc.close();
   }

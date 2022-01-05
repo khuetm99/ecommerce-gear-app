@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/blocs/authentication/bloc.dart';
 import 'package:ecommerce_app/blocs/bloc.dart';
 import 'package:ecommerce_app/blocs/cart/bloc.dart';
+import 'package:ecommerce_app/blocs/discount/discount_bloc.dart';
 import 'package:ecommerce_app/blocs/favorites/bloc.dart';
 import 'package:ecommerce_app/blocs/profile/bloc.dart';
 import 'package:ecommerce_app/configs/config.dart';

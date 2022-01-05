@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.only(left: 5, bottom: 16),
+            padding: EdgeInsets.only(left: 5, bottom: 16, top: 8),
             child: AppProductItem(type: ProductViewType.list),
           );
         },
@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
-                                  child: PromoWidget(),
+                                  child: PromoWidget(canChoose: false,),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
