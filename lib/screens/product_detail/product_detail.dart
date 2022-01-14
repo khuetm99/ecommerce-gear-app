@@ -3,7 +3,6 @@ import 'package:ecommerce_app/blocs/authentication/bloc.dart';
 import 'package:ecommerce_app/blocs/favorites/bloc.dart';
 import 'package:ecommerce_app/blocs/feedbacks/bloc.dart';
 import 'package:ecommerce_app/blocs/product_detail/bloc.dart';
-import 'package:ecommerce_app/blocs/related_products/bloc.dart';
 import 'package:ecommerce_app/configs/config.dart';
 import 'package:ecommerce_app/constants/color_constant.dart';
 import 'package:ecommerce_app/data/models/models.dart';
@@ -13,7 +12,6 @@ import 'package:ecommerce_app/screens/product_detail/related_products.dart';
 import 'package:ecommerce_app/screens/product_detail/slogan.dart';
 import 'package:ecommerce_app/utils/utils.dart';
 import 'package:ecommerce_app/widgets/favorite_button.dart';
-import 'package:ecommerce_app/widgets/loading_widget.dart';
 import 'package:ecommerce_app/widgets/widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -216,11 +214,23 @@ class _ProductDetailState extends State<ProductDetail> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    product.price.toPrice(),
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor),
+                  Row(
+                    children: [
+                      Text(
+                        product.price.toPrice(),
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor),
+                      ),
+                      if (product.percentOff > 0)
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            "${product.originalPrice.toPrice()}",
+                            style: TextStyle(decoration: TextDecoration.lineThrough),
+                          ),
+                        ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8),

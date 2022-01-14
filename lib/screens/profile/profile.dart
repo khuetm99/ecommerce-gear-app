@@ -68,25 +68,6 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
 
-    // _bannerAd = BannerAd(
-    //   adUnitId: Ads.bannerAdUnitId,
-    //   size: AdSize.banner,
-    //   request: AdRequest(),
-    //   listener: BannerAdListener(
-    //     onAdLoaded: (_) {
-    //       setState(() {
-    //         _isAdLoaded = true;
-    //       });
-    //     },
-    //     onAdFailedToLoad: (ad, error) {
-    //       // Releases an ad resource when it fails to load
-    //       ad.dispose();
-    //
-    //       print('Ad load failed (code=${error.code} message=${error.message})');
-    //     },
-    //   ),
-    // );
-    //_bannerAd.load();
 
     bannerAd.load();
     myRewarded.load();
